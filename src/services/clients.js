@@ -11,6 +11,10 @@ export default {
 
     cadastrar: (cliente) => {
         return http.post('cadastrar', cliente)
+    },
+
+    deletar: (id) => {
+        return http.delete('excluir?id='+ id)
     }
 
 };

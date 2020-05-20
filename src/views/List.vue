@@ -46,17 +46,27 @@ export default {
   },
   methods: {
     excluir(id) {
-      alert("confirma a exclusão?");
-      console.log('excluir', id);
+      this.loading = true;
+      alert("Cliente será excluido");
+      
+      Client.deletar(id).then( res => {
+      console.log('Cliente excluído - ', id);
+      });
+      this.clients = [],
+      this.listar();
+    },
+
+    listar() {
+        Client.obterTodos().then( res => {
+            console.log(res.data);
+            this.clients = res.data;
+            this.loading = false;
+        })
     }
   },
 
   mounted(){
-    Client.obterTodos().then( res => {
-      console.log(res.data);
-      this.clients = res.data;
-      this.loading = false;
-    })
+    this.listar();
   }
 };
 </script>
