@@ -10,7 +10,7 @@ export default {
     },
 
     cadastrar: (cliente) => {
-        return http.post('cadastrar', cliente)
+        return http.post('cadastrar', {body: cliente})
     },
 
     deletar: (id) => {

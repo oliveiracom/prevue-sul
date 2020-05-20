@@ -24,11 +24,13 @@
 </template>
 
 <script>
+import { Component, Vue } from "vue-property-decorator";
 import Header from "@/components/layout/Header.vue";
 import Client from "@/services/clients.js";
 
 export default {
   name: "Create",
+  myvar: "dt_nascimento",
   components: {
     Header
   },
@@ -45,7 +47,7 @@ export default {
       },
       cliente: {
         nome: '',
-        dtNasc: '',
+        dtNasc: ''
       },
       body: {},
       errors: [],
@@ -60,18 +62,34 @@ export default {
 
     addCliente() {
       this.body = {
-      }
+        "NOME":"Caropita Sangue bom",
+        "DT_NASCIMENTO":"1983-02-07",
+        "STATUS":1,
+        "DAT_INCLUSAO":"2019-10-18",
+        "cliente_enderecos":[  
+            {  
+              "LOGRADOURO":"rua quaiz quaiz , 100",
+              "CEP":"06670707",
+              "UF":"SP",
+              "CIDADE":"SAO PAULO",
+              "BAIRRO":"CENTRO",
+              "STATUS":1,
+              "DAT_INCLUSAO":"2019-10-18"
+            }
+        ]
+      },
+
       this.loading = true;
       this.cliente.clienteEnd =  JSON.stringify(this.enderecos)
-      this.body = JSON.stringify(this.cliente)
+      //this.body = JSON.stringify(this.cliente)
 
-      console.log(this.body);
+      
 
-      /*Client.cadastrar().then( res => {
+      Client.cadastrar(this.body).then( res => {
         alert(res);
       }).catch( e => {
         this.errors = JSON.parse(e);
-      });*/
+      });
 
       this.loading = false;
     }
