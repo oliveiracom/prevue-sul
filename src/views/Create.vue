@@ -49,6 +49,7 @@ export default {
         nome: '',
         dtNasc: ''
       },
+      test: {},
       body: {},
       errors: [],
       loading: true,
@@ -60,9 +61,13 @@ export default {
 
   methods: {
 
+    formatDate(){
+      
+    },
+
     addCliente() {
       this.body = {
-        "NOME":"Caropita Sangue bom",
+        "NOME": this.cliente.nome,
         "DT_NASCIMENTO":"1983-02-07",
         "STATUS":1,
         "DAT_INCLUSAO":"2019-10-18",
@@ -80,13 +85,10 @@ export default {
       },
 
       this.loading = true;
-      this.cliente.clienteEnd =  JSON.stringify(this.enderecos)
-      //this.body = JSON.stringify(this.cliente)
-
-      
+      this.test =  JSON.stringify(this.body)      
 
       Client.cadastrar(this.body).then( res => {
-        alert(res);
+        console.log(res)
       }).catch( e => {
         this.errors = JSON.parse(e);
       });
