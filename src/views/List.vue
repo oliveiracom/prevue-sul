@@ -6,7 +6,6 @@
 
     <span class="loading" v-if="loading"></span>
     <div class="client_list" v-for="client of clients" :key="client.id">
-
       <div class="card">
         <div class="top">
           <h2>{{ client.nome }}</h2>
@@ -15,7 +14,10 @@
           <button class="down"></button>
         </div>
 
-        <ClientData :nome="client.id"/>
+        <div class="hidden" v-bind:class="client.id">
+          <ClientData :id="client.id"/>
+        </div>
+        
       </div>
 
   </div>
@@ -44,6 +46,7 @@ export default {
   },
   methods: {
     excluir(id) {
+      alert("confirma a exclusão?");
       console.log('excluir', id);
     }
   },

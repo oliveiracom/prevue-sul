@@ -6,15 +6,16 @@
 
     <span class="loading" v-if="loading"></span>
     <form @submit.prevent="addCliente">
-      <input type="text" v-model="cliente.nome" name="cliente" placeholder="Nome Completo:" required/><br/>
+      <input type="text" v-model="cliente.nome" min="20" name="cliente" placeholder="Nome Completo:" required/><br/>
       
       <input type="text" v-model="cliente.dtNasc" name="dt_nascimento" placeholder="Data de Nascimento" required/><br/>
       Endereço Principal:<br/>
-      <input type="text" v-model="enderecos.logradouro" name="logradouro" placeholder="Rua" /><br/>
-      <input type="text" v-model="enderecos.cep" name="cep" placeholder="CEP" /><br/>
-      <input type="text" v-model="enderecos.uf" name="uf" placeholder="Estado" /><br/>
-      <input type="text" v-model="enderecos.city" name="cidade" placeholder="Cidade" /><br/>
-      <input type="text" v-model="enderecos.bairro" name="bairro" placeholder="Bairro" /><br/>
+      <input type="text" v-model="enderecos.logradouro" name="logradouro" placeholder="Rua" required/><br/>
+      <input type="text" v-model="enderecos.cep" name="cep" placeholder="CEP" required/><br/>
+      <input type="text" v-model="enderecos.uf" name="uf" placeholder="Estado" required/><br/>
+      <input type="text" v-model="enderecos.city" name="cidade" placeholder="Cidade" required /><br/>
+      <input type="text" v-model="enderecos.bairro" name="bairro" placeholder="Bairro" required/><br/>
+      <button class="btn">Adicionar Endereço</button>
       <input type="submit" value="Salvar Cliente" class="btn btn-send"/> 
     </form>
     <span v-for="(erro, index) of errors" :key="index">{{ erro.field }} - {{ erro.default }}</span>

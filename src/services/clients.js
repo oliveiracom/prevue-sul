@@ -6,7 +6,7 @@ export default {
     },
 
     obter: (id) => {
-        return http.get('obter-id/', id)
+        return http.get('obter-id/' + id)
     },
 
     cadastrar: (cliente) => {
