@@ -15,7 +15,19 @@
       <input type="text" v-model="enderecos.uf" name="uf" placeholder="Estado" required/><br/>
       <input type="text" v-model="enderecos.city" name="cidade" placeholder="Cidade" required /><br/>
       <input type="text" v-model="enderecos.bairro" name="bairro" placeholder="Bairro" required/><br/>
-      <button class="btn">Adicionar Endereço</button>
+
+      <div v-for="(end, index) of endExtra" :key="index" class="extra_address">
+      Endereço {{ index + 1 }}  <button type="button" class="btn" v-on:click="removeAddress(index)">Remover Endereço</button>
+      <input type="text" v-model="endExtra[index].logradouro" name="logradouro" placeholder="Rua"/><br/>
+      <input type="text" v-model="endExtra[index].cep" name="cep" placeholder="CEP"/><br/>
+      <input type="text" v-model="endExtra[index].uf" name="uf" placeholder="Estado"/><br/>
+      <input type="text" v-model="endExtra[index].city" name="cidade" placeholder="Cidade" /><br/>
+      <input type="text" v-model="endExtra[index].bairro" name="bairro" placeholder="Bairro"/><br/>
+
+      </div>
+
+      <button type="button" class="btn" v-on:click="addAddress">Adicionar Endereço</button>
+
       <input type="submit" value="Salvar Cliente" class="btn btn-send"/> 
     </form>
     <span v-for="(erro, index) of errors" :key="index">{{ erro.field }} - {{ erro.default }}</span>
@@ -36,15 +48,8 @@ export default {
   },
   data() {
     return {
-      enderecos: {
-        logradouro: '',
-        cep: '',
-        uf: '',
-        cidade: '',
-        bairro: '',
-        status: '',
-        datInc:''
-      },
+      enderecos: [],
+      endExtra: [],
       cliente: {
         nome: '',
         dtNasc: ''
@@ -61,38 +66,54 @@ export default {
 
   methods: {
 
+    silence() {
+      console.log('silence in the house');
+    },
+
     formatDate(){
-      
+      console.log('niente');
+    },
+
+    addAddress() {
+      console.log('add address');
+      this.endExtra.push(
+        {
+        logradouro: '',
+        cep: '',
+        uf: '',
+        cidade: '',
+        bairro: '',
+        status: '1',
+        datInc:'2020-05-20'
+        }
+      );
+    },
+
+    removeAddress(index){
+      this.endExtra.splice(index,1);
     },
 
     addCliente() {
       this.body = {
         "NOME": this.cliente.nome,
-        "DT_NASCIMENTO":"1983-02-07",
+        "DT_NASCIMENTO": this.cliente.dtNasc,
         "STATUS":1,
         "DAT_INCLUSAO":"2019-10-18",
-        "cliente_enderecos":[  
-            {  
-              "LOGRADOURO":"rua quaiz quaiz , 100",
-              "CEP":"06670707",
-              "UF":"SP",
-              "CIDADE":"SAO PAULO",
-              "BAIRRO":"CENTRO",
-              "STATUS":1,
-              "DAT_INCLUSAO":"2019-10-18"
-            }
-        ]
+        "cliente_enderecos": this.endExtra
       },
 
-      this.loading = true;
-      this.test =  JSON.stringify(this.body)      
+      this.loading = true;    
 
       Client.cadastrar(this.body).then( res => {
-        console.log(res)
+        console.log('Sucesso');
+        this.cliente = {};
+        this.enderecos = [];
+        this.endExtra = [];
       }).catch( e => {
         this.errors = JSON.parse(e);
       });
 
+      
       this.loading = false;
     }
 
